@@ -1,0 +1,61 @@
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" type="text/javascript"></script>
+	<style>
+		div.examplediv {
+			border: 1px solid #000000;
+			padding: 5px;
+			width: 200px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+    <div>
+        <div id="fb-root">
+        </div>
+        <div class="examplediv" onclick="return share();">
+            <strong>Click Here to Share Me!</strong>
+        </div>
+        <script type="text/javascript">
+            window.fbAsyncInit = function () {
+                FB.init({ appId: 'YOUR_API_KEY', status: true, cookie: true,
+                    xfbml: true
+                });
+            };
+            (function () {
+                var e = document.createElement('script');
+                e.async = true;
+                e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js'; //dyno-load the asm!
+                document.getElementById('fb-root').appendChild(e);
+            } ());
+
+            function share() {
+                FB.ui({ method: 'stream.publish',
+                    message: 'Mark Hagan is super-awesome!',
+                    user_message_prompt: 'Thank you for sharing!',
+                    attachment: {
+                        name: 'Mark\'s Website',
+                        caption: 'This guy just shared the best website evarz!',
+                        href: 'http://www.markhagan.me/',
+                        media: [{ 'type': 'image', 'src': 'http://markhagan.me/images/MarkHagan.jpg',
+                            'href': 'http://www.markhagan.me/'
+                        }]
+                    },
+                    action_links: [
+                { text: 'Mark Hagan', href: 'http://www.markhagan.me/' }
+            ]
+                },
+            function (response) {
+                if (response && response.post_id) {
+                    alert('Thanks for sharing!');
+					// I could trigger a post-back event or something fancy here to "reward" my viewer for sharing.
+                }
+            }
+        );
+                return false;
+            }
+        </script>
+    </div>
+</body>
+</html>
